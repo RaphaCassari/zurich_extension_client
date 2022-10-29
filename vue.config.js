@@ -2,6 +2,7 @@ module.exports = {
   "transpileDependencies": [
     "vuetify"
   ],
+  publicPath: '/zurich_extension_client/',
   devServer: {
     proxy: {
       '^/api': {

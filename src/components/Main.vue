@@ -100,7 +100,7 @@ export default {
       }
     },
     async configure() {
-      const popupUrl = `${window.location.origin}/#/configure`;
+      const popupUrl = `${window.location.origin}/zurich_extension_client/#/configure`;
       await tableau.extensions.ui
         .displayDialogAsync(popupUrl, "JSON.stringify(dataTable)", {
           height: 750,
@@ -121,7 +121,7 @@ export default {
     },
     onReviewLeakageClick() {
       let ref = this;
-      const popupUrl = `${window.location.origin}/#/review_leakage`;
+      const popupUrl = `${window.location.origin}/zurich_extension_client/#/review_leakage`;
       const worksheet = tableau.extensions.dashboardContent.dashboard.worksheets.find(
         (w) => w.name === tableau.extensions.settings.get("LEAKAGE_WORKSHEET")
       );
@@ -148,7 +148,7 @@ export default {
     },
     onCommentClick() {
       let ref = this;
-      const popupUrl = `${window.location.origin}/#/comment`;
+      const popupUrl = `${window.location.origin}/zurich_extension_client/#/comment`;
       const worksheet = tableau.extensions.dashboardContent.dashboard.worksheets.find(
         (w) => w.name === tableau.extensions.settings.get("VALIDATION_WORKSHEET")
       );
@@ -190,7 +190,7 @@ export default {
           markSelectionEvent.getMarksAsync().then((marks) => {
             const dataTable = marks.data[0];
             if (dataTable.totalRowCount == 1) {
-              const popupUrl = `${window.location.origin}/#/review_validation`;
+              const popupUrl = `${window.location.origin}/zurich_extension_client/#/review_validation`;
               tableau.extensions.ui
                 .displayDialogAsync(popupUrl, JSON.stringify(dataTable), {
                   height: 450,
@@ -221,7 +221,7 @@ export default {
             dataTable["analystName"] = this.analyst_name;
             console.log(dataTable);
             if (dataTable.totalRowCount == 1) {
-              const popupUrl = `${window.location.origin}/#/manual_review`;
+              const popupUrl = `${window.location.origin}/zurich_extension_client/#/manual_review`;
               tableau.extensions.ui
                 .displayDialogAsync(popupUrl, JSON.stringify(dataTable), {
                   height: 490,
