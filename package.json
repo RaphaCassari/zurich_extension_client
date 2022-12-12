@@ -8,7 +8,7 @@
         "build": "vue-cli-service build",
         "lint": "vue-cli-service lint",
         "deploy": "push-dir --dir=dist --branch=gh-pages",
-        "deploy2":"git init && git add . && git commit -m 'Initial' && git remote add origin https://github.com/RaphaCassari/zurich_extension_client.git && git push --force origin master:gh-pages",
+        "deploy2":"yarn build && cd dist && git init && git add . && git commit -m 'Initial' && git remote add origin https://github.com/RaphaCassari/zurich_extension_client.git && git push --force origin master:gh-pages",
         "ps:gh": "git add . && git commit -m 'deploy' && git push origin master && yarn build && yarn deploy"
     },
     "dependencies": {

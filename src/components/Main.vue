@@ -158,7 +158,7 @@ export default {
         tableau.extensions.ui
           .displayDialogAsync(popupUrl, JSON.stringify(dataTable), {
             height: 400,
-            width: 500,
+            width: 800,
           })
           .then((closePayload) => {
             console.log(closePayload);
@@ -247,12 +247,12 @@ export default {
     changeStatus() {
       this.manual_review.created_at = new Date(Date.now()).toISOString();
       axios
-        .get(`${config.HEROKU_URL}/get_status?sise_key=${this.manual_review.sise_key}`)
+        .get(`${config.AWS_URL}/get_status?sise_key=${this.manual_review.sise_key}`)
         .then((res) => {
           if (res.data == "nothing") {
-            axios.post(`${config.HEROKU_URL}/create_status`, this.manual_review);
+            axios.post(`${config.AWS_URL}/create_status`, this.manual_review);
           } else {
-            axios.post(`${config.HEROKU_URL}/update_status`, this.manual_review);
+            axios.post(`${config.AWS_URL}/update_status`, this.manual_review);
           }
         });
       if (this.manual_review.status == 1) {
@@ -287,7 +287,7 @@ export default {
             tableau.extensions.settings.get("MANUAL_REVIEW_USER")
           );
           axios
-            .get(`${config.HEROKU_URL}/get_status?sise_key=${ref.manual_review.sise_key}`)
+            .get(`${config.AWS_URL}/get_status?sise_key=${ref.manual_review.sise_key}`)
             .then((res) => {
               console.log(res);
               if (res.data == "nothing") {

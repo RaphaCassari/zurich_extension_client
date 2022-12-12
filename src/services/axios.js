@@ -7,7 +7,7 @@ const api = axios.create({
 
 export const rootCause_API = {
     get: async() => {
-        const response = await api.get(`${config.HEROKU_URL}/rootcauses`);
+        const response = await api.get(`${config.AWS_URL}/rootcauses`);
         const { data } = response;
         return data;
     }

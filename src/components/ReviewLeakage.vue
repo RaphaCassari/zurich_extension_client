@@ -199,7 +199,7 @@ export default {
     //payload = {coverage_id = val, validation_id = val}
     fetchRootCauses(payload) {
       if (this.root_causes.length == 0) {
-        let uri = `${config.HEROKU_URL}/rootcausesleakage`;
+        let uri = `${config.AWS_URL}/rootcausesleakage`;
         this.dialog = true;
         if (payload) {
           uri += `?coverage_id=${payload.coverage_id}`;
@@ -229,7 +229,7 @@ export default {
       if (this.$refs.form.validate()) {
         this.manual_review.created_at = new Date(Date.now()).toISOString().split(".")[0];
         this.dialog = true;
-        let url = `${config.HEROKU_URL}/manual_review_leakage`;
+        let url = `${config.AWS_URL}/manual_review_leakage`;
 
         axios
           .post(url, this.manual_review)

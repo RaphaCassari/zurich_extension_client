@@ -174,7 +174,7 @@ export default {
   },
   methods: {
     getCauses() {
-      axios.get(`${config.HEROKU_URL}/rootcauses`).then(
+      axios.get(`${config.AWS_URL}/rootcauses`).then(
         (response) =>
           (this.causes = response.data.map((c) => ({
             value: c.root_cause_id,
@@ -199,7 +199,7 @@ export default {
         this.manual_review.created_at = new Date(Date.now()).toISOString().split(".")[0];
 
         this.dialog = true;
-        let url = `${config.HEROKU_URL}/manual_check`;
+        let url = `${config.AWS_URL}/manual_check`;
         axios
           .post(url, this.manual_review)
           .then(() => {
@@ -293,7 +293,7 @@ export default {
 
       axios
         .get(
-          `${config.HEROKU_URL}/getAnalystById?validation_id=${ref.manual_review.validation_id}&sise_key=${ref.manual_review.sise_key}`
+          `${config.AWS_URL}/getAnalystById?validation_id=${ref.manual_review.validation_id}&sise_key=${ref.manual_review.sise_key}`
         )
         .then((res) => {
           if (res.data != "nothing") {
