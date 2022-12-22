@@ -40,7 +40,7 @@
         ></v-autocomplete>
 
         <v-btn
-          class="ma-2 ml-1 col-5"
+          class="ma-2 ml-1 col-4"
           color="normal"
           :disabled="this.manual_review.status == 1"
           @click="onCommentClick()"
@@ -49,13 +49,19 @@
           Adicionar Comentario
         </v-btn>
         <v-btn
-          class="ma-2 col-5"
+          class="ma-2 col-4"
           color="primary"
           @click="onReviewLeakageClick()"
           :disabled="this.manual_review.status == 1"
         >
           <v-icon dark left> mdi-message-draw </v-icon>Revisar Leakage
         </v-btn>
+        <v-switch
+          class="ma-2 ml-9"
+          v-model="isR2"
+          inset
+          :label="isR2 ? 'R2' : 'R1'"
+        ></v-switch>
       </div>
     </div>
   </div>
@@ -70,6 +76,7 @@ export default {
   data() {
     return {
       title: "Manual review",
+      isR2: false,
       manual_review: {
         sise_key: null,
         user_name: null,
@@ -263,6 +270,17 @@ export default {
         this.manual_review.status = 1;
       }
     },
+    changeStage() {
+      axios.post(`${config.AWS_URL}/update_stage`, {
+        sise_key: this.manual_review.sise_key,
+        stage: this.isR2 ? 2 : 1,
+      });
+    },
+  },
+  watch: {
+    isR2(val) {
+      this.changeStage();
+    },
   },
   mounted: function () {
     let ref = this;
@@ -275,7 +293,7 @@ export default {
         tableau.extensions.settings.saveAsync(); */
 
         const worksheet = tableau.extensions.dashboardContent.dashboard.worksheets.find(
-          (w) => w.name === tableau.extensions.settings.get("LEAKAGE_WORKSHEET")
+          (w) => w.name === tableau.extensions.settings.get("VALIDATION_WORKSHEET")
         );
         worksheet.getSummaryDataAsync().then(function (dataTable) {
           ref.manual_review.sise_key = ref.getValueFromDataTable(
@@ -289,7 +307,6 @@ export default {
           axios
             .get(`${config.AWS_URL}/get_status?sise_key=${ref.manual_review.sise_key}`)
             .then((res) => {
-              console.log(res);
               if (res.data == "nothing") {
                 ref.manual_review.status = 1;
               } else if (res.data[0].status == 1) {
@@ -298,6 +315,12 @@ export default {
                 ref.manual_review.status = 2;
                 ref.addValidationEventHandler();
               }
+            });
+
+          axios
+            .get(`${config.AWS_URL}/get_stage?sise_key=${ref.manual_review.sise_key}`)
+            .then((res) => {
+              ref.isR2 = res.data[0].stage == 2;
             });
         });
 

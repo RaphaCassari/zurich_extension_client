@@ -14,7 +14,7 @@
             <v-autocomplete
               v-model="manual_review.analystName2"
               :items="analysts"
-              label="Analista Segundario"
+              label="Analista Secundario"
             ></v-autocomplete>
           </v-col>
           <v-col cols="4">
